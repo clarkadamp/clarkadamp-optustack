@@ -1,0 +1,55 @@
+---
+
+server_groups:
+  admins:
+    ensure: present
+    gid: 500
+
+users_sysadmins:
+        aclark:
+            ensure: present
+            uid: 1000
+            gid: admins
+            groups: - wheel
+            comment: Adam Clark
+            managehome: true
+            ssh_authorized_keys:
+                    adam.clark@RALPH.HOME:
+                            type: 'ssh-rsa'
+                            key:  'AAAAB3NzaC1yc2EAAAADAQABAAAAgQCgvyC5maIPaPq5kd6MUDjYe7QLrrG/TNiJRz151gY1HP94a4cNtWvIzyin6iu6N2f/IEAFwBCR2wLp3aBZcY9p8mQuKG7l0R48b/Q8TGftuCaN+vFw/ntL5Tk5ZLLqDzrfRN0EweQxm09aZlpZ3iy7DDMtREBXcMFIbJVPkAsoZw=='
+
+
+# Specify NTP Servers to use
+ntp::servers: [ '10.17.10.254 iburst' ]
+
+# Parameters for the VMWare Tools on VMWare virtual machines
+vmwaretools::version:     '9.0.5-1065307'
+vmwaretools::working_dir: '/tmp/vmwaretools'
+vmwaretools::archive_url: 'http://bootstrap.home/puppet'
+vmwaretools::archive_md5: '924b75b0b522eb462266cf3c24c98837'
+
+optustack::extra_packages:
+  - man
+  - tcpdump
+  - bind-utils
+
+optustack::profile::dblvm::physical_device: '/dev/sdb'
+
+mysql::client_package_name:         'MariaDB-client'
+mysql::service_name:                'mysql'
+galera::server::cluster_name:       'galera_cluster'
+galera::server::wsrep_sst_username: 'wsprep_user'
+galera::server::wsrep_sst_password: 'wsprep_password'
+galera::server::wsrep_sst_method:   'rsync'
+galera::server::config_hash:
+  root_password: root_pass
+
+galera::server::master_ip:
+  - 10.17.10.131
+  - 10.17.10.132
+  - 10.17.10.133
+
+
+optustack::slb::api_virtual_ip:        172.16.33.1/27
+
+

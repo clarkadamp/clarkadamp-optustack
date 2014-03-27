@@ -1,0 +1,5 @@
+---
+
+optustack::slb::api_priority: 101
+optustack::slb::api_state:    MASTER
+
