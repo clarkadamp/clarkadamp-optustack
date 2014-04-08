@@ -3,3 +3,4 @@
 optustack::slb::api_priority: 100
 optustack::slb::api_state:    BACKUP
 
+mysql::client_package_name:         'MariaDB-client'

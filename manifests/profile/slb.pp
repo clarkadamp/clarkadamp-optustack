@@ -1,4 +1,10 @@
 class optustack::profile::slb {
+
+  Exec {
+    path => $::path
+  }
+
+  sysctl::value { "net.ipv4.ip_nonlocal_bind": value => "1"}
  
   include keepalived  
 
@@ -15,6 +21,10 @@ class optustack::profile::slb {
     auth_pass         => hiera('optustack::slb::api_auth_pass:' , 'vrrpauth' ) ,
     virtual_ipaddress => hiera('optustack::slb::api_virtual_ip' ) ,
     track_script      => 'check_haproxy',
+  }
+
+  class { 'haproxy':
+    http_stats_enable => true,
   }
 
 }

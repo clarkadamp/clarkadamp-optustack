@@ -1,14 +1,12 @@
 class optustack::profile::slbmysqldbc {
 
   class {'galera::repo': } ->
-  class { 'mysql': } ->
+  class { 'mysql::client': 
+    package_name => 'MariaDB-client'
+  } ->
 
-  class { 'haproxy': 
-    http_stats_enable => true,
-  }
-
-  haproxy::listen { 'mysql_dbc':
-    ipaddress => $ipaddress_eth0,
+  haproxy::listen { 'mysql_cluster':
+    ipaddress => '0.0.0.0',
     ports     => '3306',
     mode      => 'tcp',
     options   => {

@@ -8,9 +8,9 @@ server_groups:
 users_sysadmins:
         aclark:
             ensure: present
-            uid: 1000
+            uid: 1001
             gid: admins
-            groups: - wheel
+            groups: - admins
             comment: Adam Clark
             managehome: true
             ssh_authorized_keys:
@@ -28,15 +28,16 @@ vmwaretools::working_dir: '/tmp/vmwaretools'
 vmwaretools::archive_url: 'http://bootstrap.home/puppet'
 vmwaretools::archive_md5: '924b75b0b522eb462266cf3c24c98837'
 
+#apache::logroot:  '/var/log/blah'
+
 optustack::extra_packages:
   - man
   - tcpdump
-  - bind-utils
 
 optustack::profile::dblvm::physical_device: '/dev/sdb'
 
-mysql::client_package_name:         'MariaDB-client'
-mysql::service_name:                'mysql'
+#mysql::client_package_name:         'MariaDB-client'
+#mysql::service_name:                'mysql'
 galera::server::cluster_name:       'galera_cluster'
 galera::server::wsrep_sst_username: 'wsprep_user'
 galera::server::wsrep_sst_password: 'wsprep_password'
@@ -52,4 +53,72 @@ galera::server::master_ip:
 
 optustack::slb::api_virtual_ip:        172.16.33.1/27
 
+optustack::rabbitmq::userid:           rabbit
+optustack::rabbitmq::password:         rabbit
+optustack::rabbitmq::cluster_nodes:
+  - message01
+  - message02
+  - message03
 
+optustack::rabbitmq::slb: 
+  - slb01.openstack.home
+  - slb02.openstack.home
+
+
+optustack::database::address:          'db.openstack.home'
+optustack::database::service_password: 'service_password'
+optustack::endpoint::address:public:   'api.openstack.home'
+optustack::endpoint::address:admin:    'api-admin.openstack.home'
+optustack::endpoint::address:internal: 'api-internal.openstack.home'
+
+optustack::keystone::admin_token:      'admin_token'
+optustack::keystone::admin_email:      'clark.adam.p@gmail.com'
+optustack::keystone::admin_password:   'admin_password'
+optustack::keystone::verbose:          'True'
+optustack::keystone::debug:            'True'
+
+optustack::tenants:
+    "test":
+        description: "Test tenant"
+
+optustack::users:
+    "test":
+        password:    "abc123"
+        tenant:      "test"
+        email:       "test@example.com"
+        admin:       true
+
+optustack::region: 'homelab'
+
+#optustack::ceph::test_cluster::name:        'test_cluster'
+optustack::ceph::test_cluster::admin_key:    'AQCfMj5T2MUXDhAA+RiGPRAbQGRJNyZ7ZRok7Q==' 
+optustack::ceph::test_cluster::fsid:         '983a74a9-1e99-42ef-8a1d-097553c3e6ce'
+optustack::ceph::test_cluster::replicas:     '2'
+optustack::ceph::test_cluster::nw_public:    '172.16.33.0/24'
+optustack::ceph::test_cluster::nw_cluster:   '172.16.34.0/24'
+optustack::ceph::test_cluster::min_replicas: '1'
+optustack::ceph::test_cluster::pg_num:       '100'
+optustack::ceph::test_cluster::mon_key:      'AQD0AD5TGHb1NRAAM84aQcdK8vAQb8kqduP2NA=='
+optustack::ceph::test_cluster::monitors:         
+  - ceph-mon01
+  - ceph-mon02
+  - ceph-mon03
+
+optustack::ceph::test_cluster::mon_hosts:         
+  - 172.16.33.20
+  - 172.16.33.21
+  - 172.16.33.22
+
+optustack::ceph::test_cluster::osd_devices:
+  '/dev/sdb':
+
+optustack::glance::password:     'glance_password'
+optustack::glance::verbose:      'True'
+optustack::glance::debug:        'True'
+optustack::neutron::password:    'neutron_password'
+optustack::neutron::verbose:     'True'
+optustack::neutron::debug:       'True'
+optustack::neutron::tunnel_type: 'vxlan'
+
+optustack::api::interface::mgmt: 'eth0'
+optustack::api::interface::data: 'eth1'

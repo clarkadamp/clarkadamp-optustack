@@ -1,15 +1,18 @@
 class optustack::profile::database {
 
-  class { 'galera::server': 
-    require => Class['galera::repo'],
-  } 
-  class {'galera::monitor':
+  class { '::galera::server': 
+    wsrep_sst_method => 'rsync'
+  }
+  
+  
+
+  class { 'galera::monitor':
     monitor_username => 'mon_user',
     monitor_password => 'mon_pass'
   }
 
-  @@haproxy::balancermember { $fqdn:
-    listening_service => 'mysql_dbc',
+  @@haproxy::balancermember { "${fqdn}_mysql":
+    listening_service => 'mysql_cluster',
     server_names      => $fqdn,
     ipaddresses       => $ipaddress_eth0,
     ports             => '3306',
