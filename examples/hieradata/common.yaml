@@ -61,8 +61,9 @@ optustack::rabbitmq::cluster_nodes:
   - message03
 
 optustack::rabbitmq::slb: 
-  - slb01.openstack.home
-  - slb02.openstack.home
+  - message01.openstack.home
+  - message02.openstack.home
+  - message03.openstack.home
 
 
 optustack::database::address:          'db.openstack.home'
@@ -112,13 +113,28 @@ optustack::ceph::test_cluster::mon_hosts:
 optustack::ceph::test_cluster::osd_devices:
   '/dev/sdb':
 
-optustack::glance::password:     'glance_password'
-optustack::glance::verbose:      'True'
-optustack::glance::debug:        'True'
-optustack::neutron::password:    'neutron_password'
-optustack::neutron::verbose:     'True'
-optustack::neutron::debug:       'True'
-optustack::neutron::tunnel_type: 'vxlan'
+optustack::ceph::test_cluster::glance_key:        'AQB7KkJTgHPOMxAAOTAAARwQxwW6ZnSEorwFDQ=='
+optustack::ceph::test_cluster::cinder_key:        'AQB7KkJTuOGHKRAAEEIAI1Rn8wsQYoY6yv9bzw=='
+optustack::ceph::test_cluster::cinder_backup_key: 'AQB8KkJTGCmOMBAAuURn+Mus9wnwP3i9qJ4eAw=='
 
-optustack::api::interface::mgmt: 'eth0'
-optustack::api::interface::data: 'eth1'
+optustack::ceph::cinder::rbd_secret_uuid:         '457eb676-33da-42ec-9a8c-9293d545c337'
+
+optustack::glance::password:       'glance_password'
+optustack::glance::verbose:        'True'
+optustack::glance::debug:          'True'
+optustack::neutron::password:      'neutron_password'
+optustack::neutron::verbose:       'True'
+optustack::neutron::debug:         'True'
+optustack::neutron::tunnel_type:   'vxlan'
+optustack::neutron::shared_secret: 'shared_secret'
+
+optustack::api::interface::mgmt:   'eth0'
+optustack::api::interface::data:   'eth1'
+
+optustack::nova::password:         'nova_password'
+optustack::nova::verbose:          'True'
+optustack::nova::debug:            'True'
+
+optustack::cinder::password:       'cinder_password'
+optustack::cinder::verbose:        'True'
+optustack::cinder::debug:          'True'

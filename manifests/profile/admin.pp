@@ -34,6 +34,9 @@ class optustack::profile::admin {
   }
 
   include ::glance::client
+  include ::nova::client
+  include ::cinder::client
+  
   
   package{ 'python-neutronclient':
     ensure => present,

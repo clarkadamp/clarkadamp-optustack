@@ -4,7 +4,9 @@ class optustack::role::database inherits ::optustack::role {
   class { '::optustack::profile::database': } ->
   class { '::optustack::profile::db_keystone': } ->
   class { '::optustack::profile::db_glance': } ->
-  class { '::optustack::profile::db_neutron': }
+  class { '::optustack::profile::db_neutron': } ->
+  class { '::optustack::profile::db_nova': } ->
+  class { '::optustack::profile::db_cinder': }
 
 
   mysql_user { 'aclark@%':
