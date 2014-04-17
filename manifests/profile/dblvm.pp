@@ -1,7 +1,7 @@
 class optustack::profile::dblvm(
   $object_prefix   = "mysqldata",
   $physical_device ,
-  $fstype          = "ext3",
+  $fstype          = "ext4",
   $size            = "10G" ,
   $mountpoint      = "/var/lib/mysql"
 ) {

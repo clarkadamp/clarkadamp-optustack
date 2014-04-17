@@ -1,12 +1,12 @@
 class optustack::role::database inherits ::optustack::role {
 
-  class { '::optustack::profile::dblvm': } ->
-  class { '::optustack::profile::database': } ->
-  class { '::optustack::profile::db_keystone': } ->
-  class { '::optustack::profile::db_glance': } ->
-  class { '::optustack::profile::db_neutron': } ->
-  class { '::optustack::profile::db_nova': } ->
-  class { '::optustack::profile::db_cinder': }
+  class { '::optustack::profile::dblvm': }
+  class { '::optustack::profile::database': }
+#  class { '::optustack::profile::db_keystone': } ->
+#  class { '::optustack::profile::db_glance': } ->
+#  class { '::optustack::profile::db_neutron': } ->
+#  class { '::optustack::profile::db_nova': } ->
+#  class { '::optustack::profile::db_cinder': }
 
 
   mysql_user { 'aclark@%':
@@ -15,6 +15,7 @@ class optustack::role::database inherits ::optustack::role {
     max_queries_per_hour     => '0',
     max_updates_per_hour     => '0',
     max_user_connections     => '0',
+    require                  => Class [ '::optustack::profile::database' ],
   }
 
   mysql_grant { 'aclark@%/*.*':
@@ -23,6 +24,7 @@ class optustack::role::database inherits ::optustack::role {
     privileges => ['ALL'],
     table      => '*.*',
     user       => 'aclark@%',
+    require                  => Class [ '::optustack::profile::database' ],
   }
 
 }
